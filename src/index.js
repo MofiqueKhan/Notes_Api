@@ -8,6 +8,8 @@ const noteRouter = require("./routes/noteRoute");
 
 const mongoose = require("mongoose");
 
+app.use(express.json());
+
 app.use("/users", userRouter);
 app.use("/note", noteRouter);
 

@@ -5,25 +5,31 @@ const app = express();
 // const quotes = require("./quotes.json");
 const userRouter = require("./routes/userRoute");
 const noteRouter = require("./routes/noteRoute");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
+dotenv.config();
 
 const mongoose = require("mongoose");
 
 app.use(express.json());
+app.use(cors());
+
 
 app.use("/users", userRouter);
 app.use("/note", noteRouter);
 
 app.get("/", (req, res) => {
-  res.send("hello");
+  res.send("WELCOME TO NOTES API");
 });
 
+const PORT = process.env.PORT || 5000
+
 mongoose
-  .connect(
-    "mongodb+srv://admin:123moffu@cluster0.3xniivi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    app.listen(5000, () => {
-      console.log("server started on port : 5000");
+    app.listen(PORT, () => {
+      console.log("server started on port : " + PORT);
     });
   })
   .catch((error) => {
